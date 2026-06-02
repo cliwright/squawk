@@ -1,0 +1,20 @@
+# Build output
+bin/
+
+# Go
+vendor/
+
+# Docs
+venv/
+site/
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# squawk local config
+.squawk/
+.env
