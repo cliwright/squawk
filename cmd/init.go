@@ -14,6 +14,8 @@ const defaultConfigFile = "squawk.yaml"
 var defaultConfig = `templates:
   deploy-failed:
     channel: "#alerts"
+    mentions:
+      - "U12345678"
     text: |
       ❌ *{{ .repo }}* failed on ` + "`{{ .branch }}`" + `
       {{ .input }}

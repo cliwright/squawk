@@ -9,8 +9,9 @@ import (
 )
 
 type Template struct {
-	Channel string `yaml:"channel"`
-	Text    string `yaml:"text"`
+	Channel  string   `yaml:"channel"`
+	Mentions []string `yaml:"mentions"`
+	Text     string   `yaml:"text"`
 }
 
 type File struct {
