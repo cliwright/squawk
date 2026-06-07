@@ -9,7 +9,7 @@ import (
 
 // Render executes the template text with the given variables and prepends mentions.
 func (t *Template) Render(vars map[string]string) (string, error) {
-	tmpl, err := template.New("msg").Parse(t.Text)
+	tmpl, err := template.New("msg").Option("missingkey=zero").Parse(t.Text)
 	if err != nil {
 		return "", fmt.Errorf("parsing template: %w", err)
 	}
