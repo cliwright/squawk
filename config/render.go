@@ -7,8 +7,17 @@ import (
 	"text/template"
 )
 
-// Render executes the template text with the given variables and prepends mentions.
+// Render executes the template text with the given variables.
+// Mentions are available as {{ .mentions }} within the template.
 func (t *Template) Render(vars map[string]string) (string, error) {
+	if _, ok := vars["mentions"]; !ok {
+		var b strings.Builder
+		for _, m := range t.Mentions {
+			b.WriteString(fmt.Sprintf("• <@%s>\n", m))
+		}
+		vars["mentions"] = strings.TrimRight(b.String(), "\n")
+	}
+
 	tmpl, err := template.New("msg").Option("missingkey=zero").Parse(t.Text)
 	if err != nil {
 		return "", fmt.Errorf("parsing template: %w", err)
@@ -19,16 +28,5 @@ func (t *Template) Render(vars map[string]string) (string, error) {
 		return "", fmt.Errorf("executing template: %w", err)
 	}
 
-	var msg strings.Builder
-
-	if len(t.Mentions) > 0 {
-		for _, m := range t.Mentions {
-			msg.WriteString(fmt.Sprintf("<@%s> ", m))
-		}
-		msg.WriteString("\n")
-	}
-
-	msg.WriteString(buf.String())
-
-	return msg.String(), nil
+	return buf.String(), nil
 }

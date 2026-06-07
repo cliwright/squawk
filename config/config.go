@@ -10,6 +10,7 @@ import (
 
 type Template struct {
 	Channel  string   `yaml:"channel"`
+	Color    string   `yaml:"color"`
 	Mentions []string `yaml:"mentions"`
 	Text     string   `yaml:"text"`
 }

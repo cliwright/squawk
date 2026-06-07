@@ -11,9 +11,23 @@ import (
 
 const apiURL = "https://slack.com/api/chat.postMessage"
 
+type attachment struct {
+	Color string `json:"color"`
+	Text  string `json:"text"`
+}
+
 type Message struct {
-	Channel string `json:"channel"`
-	Text    string `json:"text"`
+	Channel     string       `json:"channel"`
+	Attachments []attachment `json:"attachments,omitempty"`
+}
+
+func NewMessage(channel, text, color string) Message {
+	return Message{
+		Channel: channel,
+		Attachments: []attachment{
+			{Color: color, Text: text},
+		},
+	}
 }
 
 type response struct {

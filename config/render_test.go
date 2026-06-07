@@ -9,7 +9,7 @@ func TestRenderWithMentions(t *testing.T) {
 	tmpl := Template{
 		Channel:  "#alerts",
 		Mentions: []string{"U111", "U222"},
-		Text:     "deploy failed on `{{ .branch }}`",
+		Text:     "deploy failed on `{{ .branch }}`\n{{ .mentions }}",
 	}
 
 	result, err := tmpl.Render(map[string]string{"branch": "main"})
@@ -17,12 +17,12 @@ func TestRenderWithMentions(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	if !strings.HasPrefix(result, "<@U111> <@U222>") {
-		t.Errorf("expected mentions prefix, got: %s", result)
-	}
-
 	if !strings.Contains(result, "deploy failed on `main`") {
 		t.Errorf("expected rendered text, got: %s", result)
+	}
+
+	if !strings.Contains(result, "• <@U111>") || !strings.Contains(result, "• <@U222>") {
+		t.Errorf("expected mentions in rendered output, got: %s", result)
 	}
 }
 

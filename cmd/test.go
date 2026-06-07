@@ -41,10 +41,7 @@ var testCmd = &cobra.Command{
 			return err
 		}
 
-		return slack.Send(token, slack.Message{
-			Channel: tmpl.Channel,
-			Text:    text,
-		})
+		return slack.Send(token, slack.NewMessage(tmpl.Channel, text, tmpl.Color))
 	},
 }
 

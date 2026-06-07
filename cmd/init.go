@@ -11,16 +11,29 @@ import (
 const squawkDir = ".squawk"
 const defaultConfigFile = "squawk.yaml"
 
-var defaultConfig = `templates:
-  deploy-failed:
-    channel: "#alerts"
-    mentions:
-      - "U12345678"
-    text: |
-      ❌ *{{ .repo }}* failed on ` + "`{{ .branch }}`" + `
-      {{ .input }}
-      <{{ .run_url }}|View run>
-`
+var defaultConfig = "templates:\n" +
+	"  failure:\n" +
+	"    channel: \"#alerts\"\n" +
+	"    color: \"#CC0000\"\n" +
+	"    mentions:\n" +
+	"      - \"U12345678\"\n" +
+	"    text: |\n" +
+	"      🍎 *{{ .repo }}* › `{{ .branch }}` failed\n" +
+	"\n" +
+	"      ```\n" +
+	"      {{ .input }}\n" +
+	"      ```\n" +
+	"\n" +
+	"      *Please Check*\n" +
+	"      {{ .mentions }}\n" +
+	"      <{{ .run_url }}|View run →>\n" +
+	"  success:\n" +
+	"    channel: \"#alerts\"\n" +
+	"    color: \"#36A64F\"\n" +
+	"    text: |\n" +
+	"      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded\n" +
+	"\n" +
+	"      <{{ .run_url }}|View run →>\n"
 
 var initCmd = &cobra.Command{
 	Use:   "init",
