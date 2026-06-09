@@ -1,0 +1,28 @@
+name: Test GitHub Actions
+
+on:
+  push:
+    branches:
+      - 'test/gh-actions/**'
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Build squawk
+        run: go build -o bin/squawk .
+
+      - name: Create squawk config
+        run: ./bin/squawk init
+
+      - name: Send Slack alert
+        env:
+          SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
+        run: ./bin/squawk send --template pr-opened
