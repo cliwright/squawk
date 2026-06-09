@@ -16,6 +16,5 @@ site/
 .vscode/
 
 # squawk local config
-.squawk/
 .env
 spec
