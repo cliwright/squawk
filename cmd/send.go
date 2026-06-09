@@ -2,7 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"io"
+	"os"
 
+	"github.com/cliwright/squawk/config"
+	"github.com/cliwright/squawk/slack"
 	"github.com/spf13/cobra"
 )
 
@@ -13,8 +17,42 @@ var sendCmd = &cobra.Command{
 	Use:   "send",
 	Short: "Send a Slack alert using a named template",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Printf("sending template: %s\n", sendTemplate)
-		return nil
+		cfg, err := config.Load(squawkDir)
+		if err != nil {
+			return err
+		}
+
+		tmpl, ok := cfg.Templates[sendTemplate]
+		if !ok {
+			return fmt.Errorf("template %q not found", sendTemplate)
+		}
+
+		vars := envVars()
+		for k, v := range buildVars(sendVars) {
+			vars[k] = v
+		}
+
+		if stat, err := os.Stdin.Stat(); err == nil && (stat.Mode()&os.ModeCharDevice) == 0 {
+			stdin, err := io.ReadAll(os.Stdin)
+			if err != nil {
+				return fmt.Errorf("reading stdin: %w", err)
+			}
+			if len(stdin) > 0 {
+				vars["input"] = string(stdin)
+			}
+		}
+
+		text, err := tmpl.Render(vars)
+		if err != nil {
+			return err
+		}
+
+		token, err := slack.Token()
+		if err != nil {
+			return err
+		}
+
+		return slack.Send(token, slack.NewMessage(tmpl.Channel, text, tmpl.Color))
 	},
 }
 
