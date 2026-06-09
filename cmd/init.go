@@ -26,14 +26,14 @@ var defaultConfig = "templates:\n" +
 	"\n" +
 	"      *Please Check*\n" +
 	"      {{ .mentions }}\n" +
-	"      <{{ .run_url }}|View run →>\n" +
+	"      <{{ .run_url }}|View>\n" +
 	"  success:\n" +
 	"    channel: \"#alerts\"\n" +
 	"    color: \"#36A64F\"\n" +
 	"    text: |\n" +
 	"      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded\n" +
 	"\n" +
-	"      <{{ .run_url }}|View run →>\n"
+	"      <{{ .run_url }}|View>\n"
 
 var initCmd = &cobra.Command{
 	Use:   "init",
