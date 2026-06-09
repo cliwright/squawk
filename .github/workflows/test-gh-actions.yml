@@ -22,4 +22,4 @@ jobs:
       - name: Send Slack alert
         env:
           SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
-        run: ./bin/squawk send --template failed
+        run: ./bin/squawk send --template failure
