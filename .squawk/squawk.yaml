@@ -1,0 +1,28 @@
+templates:
+  failure:
+    channel: "#cliwright-alerts"
+    color: "#CC0000"
+    mentions:
+      - "U0B8SFDPNG5"
+    text: |
+      🍎 *{{ .repo }}* › `{{ .branch }}` failed
+
+      ```
+      {{ .input }}
+      ```
+      <{{ .run_url }}|CI Run Details>
+      
+      *Please Take a Look*
+      {{ .mentions }}
+
+  success:
+    channel: "#cliwright-alerts"
+    color: "#36A64F"
+    text: |
+      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded```
+      
+      ```
+      {{ .input }}
+      ```
+      <{{ .run_url }}|CI Run Details>
+

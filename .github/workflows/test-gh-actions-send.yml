@@ -1,0 +1,35 @@
+name: Test GitHub Actions Message Send
+
+on:
+  push:
+    branches:
+      - 'test/gh-actions/**'
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Build squawk
+        run: go build -o bin/squawk .
+
+      - name: Send Slack alert on process success
+        env:
+          SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
+        run: ./bin/squawk exec --on-success success -- echo "This is a CI success test alert from Github Actions"
+
+      - name: Send Slack alert on process failure
+        env:
+          SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
+        run: ./bin/squawk exec -- ./scripts/fail.sh
+#
+#      - name: Send Slack alert on success
+#        env:
+#          SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
+#        run: ./bin/squawk send --template success --var input="This is a CI success test alert from Github Actions"
