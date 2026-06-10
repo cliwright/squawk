@@ -23,17 +23,21 @@ var defaultConfig = "templates:\n" +
 	"      ```\n" +
 	"      {{ .input }}\n" +
 	"      ```\n" +
-	"\n" +
+	"      <{{ .run_url }}|CI Run Details>\n" +
+	"      \n" +
 	"      *Please Take a Look*\n" +
 	"      {{ .mentions }}\n" +
-	"      <{{ .run_url }}|View>\n" +
+	"\n" +
 	"  success:\n" +
 	"    channel: \"#alerts\"\n" +
 	"    color: \"#36A64F\"\n" +
 	"    text: |\n" +
-	"      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded\n" +
-	"\n" +
-	"      <{{ .run_url }}|View>\n"
+	"      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded```\n" +
+	"      \n" +
+	"      ```\n" +
+	"      {{ .input }}\n" +
+	"      ```\n" +
+	"      <{{ .run_url }}|CI Run Details>\n"
 
 var initCmd = &cobra.Command{
 	Use:   "init",

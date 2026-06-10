@@ -25,3 +25,4 @@ templates:
       {{ .input }}
       ```
       <{{ .run_url }}|CI Run Details>
+
