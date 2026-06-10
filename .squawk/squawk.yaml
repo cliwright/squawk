@@ -10,14 +10,18 @@ templates:
       ```
       {{ .input }}
       ```
+      <{{ .run_url }}|CI Run Details>
       
       *Please Take a Look*
       {{ .mentions }}
-      <{{ .run_url }}|View>
+
   success:
     channel: "#cliwright-alerts"
     color: "#36A64F"
     text: |
-      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded
-
-      <{{ .run_url }}|View>
+      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded```
+      
+      ```
+      {{ .input }}
+      ```
+      <{{ .run_url }}|CI Run Details>

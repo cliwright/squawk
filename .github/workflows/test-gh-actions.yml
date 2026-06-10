@@ -19,7 +19,12 @@ jobs:
       - name: Build squawk
         run: go build -o bin/squawk .
 
-      - name: Send Slack alert
+      - name: Send Slack alert on failure
         env:
           SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
-        run: ./bin/squawk send --template failure --var input="This is a CI test alert from Github Actions"
+        run: ./bin/squawk send --template failure --var input="This is a CI failure test alert from Github Actions"
+
+      - name: Send Slack alert on success
+        env:
+          SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
+        run: ./bin/squawk send --template success --var input="This is a CI success test alert from Github Actions"
