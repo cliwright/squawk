@@ -10,7 +10,7 @@ templates:
       ```
       {{ .input }}
       ```
-
+      
       *Please Check*
       {{ .mentions }}
       <{{ .run_url }}|View>
