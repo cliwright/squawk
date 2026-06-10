@@ -18,16 +18,14 @@ type attachment struct {
 
 type Message struct {
 	Channel     string       `json:"channel"`
-	Text        string       `json:"text"`
 	Attachments []attachment `json:"attachments,omitempty"`
 }
 
 func NewMessage(channel, text, color string) Message {
 	return Message{
 		Channel: channel,
-		Text:    text,
 		Attachments: []attachment{
-			{Color: color, Text: "\u200b"},
+			{Color: color, Text: text},
 		},
 	}
 }

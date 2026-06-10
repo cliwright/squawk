@@ -19,6 +19,11 @@ jobs:
       - name: Build squawk
         run: go build -o bin/squawk .
 
+      - name: Send Slack alert on process success
+        env:
+          SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
+        run: ./bin/squawk exec --on-success -- echo "This is a CI success test alert from Github Actions"
+
       - name: Send Slack alert on process failure
         env:
           SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
