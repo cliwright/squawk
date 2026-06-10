@@ -1,4 +1,4 @@
-name: Test GitHub Actions
+name: Test GitHub Actions Message Send
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - name: Send Slack alert on process success
         env:
           SQUAWK_SLACK_TOKEN: ${{ secrets.SQUAWK_SLACK_TOKEN }}
-        run: ./bin/squawk exec --on-success -- echo "This is a CI success test alert from Github Actions"
+        run: ./bin/squawk exec --on-success success -- echo "This is a CI success test alert from Github Actions"
 
       - name: Send Slack alert on process failure
         env:

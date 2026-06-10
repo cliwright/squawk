@@ -1,4 +1,4 @@
-name: Test GitHub Actions Process Failure
+name: Test GitHub Actions Process Message Send
 
 on:
   push:
