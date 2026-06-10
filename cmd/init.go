@@ -24,7 +24,7 @@ var defaultConfig = "templates:\n" +
 	"      {{ .input }}\n" +
 	"      ```\n" +
 	"\n" +
-	"      *Please Check*\n" +
+	"      *Please Take a Look*\n" +
 	"      {{ .mentions }}\n" +
 	"      <{{ .run_url }}|View>\n" +
 	"  success:\n" +

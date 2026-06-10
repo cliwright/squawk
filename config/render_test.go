@@ -21,7 +21,7 @@ func TestRenderWithMentions(t *testing.T) {
 		t.Errorf("expected rendered text, got: %s", result)
 	}
 
-	if !strings.Contains(result, "• <@U111>") || !strings.Contains(result, "• <@U222>") {
+	if !strings.Contains(result, "<@U111> <@U222>") {
 		t.Errorf("expected mentions in rendered output, got: %s", result)
 	}
 }

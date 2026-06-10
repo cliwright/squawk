@@ -12,10 +12,13 @@ import (
 func (t *Template) Render(vars map[string]string) (string, error) {
 	if _, ok := vars["mentions"]; !ok {
 		var b strings.Builder
-		for _, m := range t.Mentions {
-			b.WriteString(fmt.Sprintf("• <@%s>\n", m))
+		for i, m := range t.Mentions {
+			if i > 0 {
+				b.WriteString(" ")
+			}
+			b.WriteString(fmt.Sprintf("<@%s>", m))
 		}
-		vars["mentions"] = strings.TrimRight(b.String(), "\n")
+		vars["mentions"] = b.String()
 	}
 
 	tmpl, err := template.New("msg").Option("missingkey=zero").Parse(t.Text)

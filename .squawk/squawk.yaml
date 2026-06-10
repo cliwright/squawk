@@ -11,7 +11,7 @@ templates:
       {{ .input }}
       ```
       
-      *Please Check*
+      *Please Take a Look*
       {{ .mentions }}
       <{{ .run_url }}|View>
   success:
