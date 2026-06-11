@@ -19,7 +19,7 @@ templates:
     channel: "#cliwright-alerts"
     color: "#36A64F"
     text: |
-      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded```
+      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded
       
       ```
       {{ .input }}

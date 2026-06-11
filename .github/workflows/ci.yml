@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools via Mise
+        uses: jdx/mise-action@v2
+
+      - name: Check formatting
+        run: task fmt:check
+
+      - name: Run linter
+        run: task lint
+
+      - name: Run tests
+        run: task test
+
+      - name: Build binary
+        run: task build
