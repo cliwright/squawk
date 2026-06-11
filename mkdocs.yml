@@ -1,0 +1,38 @@
+site_name: squawk
+site_description: A dead-simple CLI for sending Slack alerts from CI pipelines.
+site_author: Cliwright
+site_url: https://cliwright.github.io/squawk
+
+repo_name: cliwright/squawk
+repo_url: https://github.com/cliwright/squawk
+
+theme:
+  name: material
+  palette:
+    - scheme: squawk
+      primary: custom
+      accent: custom
+  font:
+    text: Atkinson Hyperlegible
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Config Reference: config.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - tables
+  - admonition
