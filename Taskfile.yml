@@ -27,6 +27,15 @@ tasks:
     desc: Format Go source files
     cmd: gofmt -w .
 
+  fmt:check:
+    desc: Check Go source formatting (fails if unformatted)
+    cmd: |
+      if [ -n "$(gofmt -l .)" ]; then
+        echo "The following files are not formatted:"
+        gofmt -l .
+        exit 1
+      fi
+
   lint:
     desc: Run go vet
     cmd: go vet ./...

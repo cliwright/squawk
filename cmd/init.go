@@ -32,34 +32,37 @@ var defaultConfig = "templates:\n" +
 	"    channel: \"#alerts\"\n" +
 	"    color: \"#36A64F\"\n" +
 	"    text: |\n" +
-	"      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded```\n" +
+	"      🍏 *{{ .repo }}* › `{{ .branch }}` succeeded\n" +
 	"      \n" +
 	"      ```\n" +
 	"      {{ .input }}\n" +
 	"      ```\n" +
 	"      <{{ .run_url }}|CI Run Details>\n"
 
+func runInit(dir string) error {
+	configPath := filepath.Join(dir, defaultConfigFile)
+
+	if _, err := os.Stat(dir); err == nil {
+		return fmt.Errorf("%s already exists", dir)
+	}
+
+	if err := os.MkdirAll(dir, 0o700); err != nil {
+		return fmt.Errorf("creating %s: %w", dir, err)
+	}
+
+	if err := os.WriteFile(configPath, []byte(defaultConfig), 0o600); err != nil {
+		return fmt.Errorf("writing %s: %w", configPath, err)
+	}
+
+	fmt.Printf("created %s\n", configPath)
+	return nil
+}
+
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a .squawk directory with a starter template file",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		dir := squawkDir
-		configPath := filepath.Join(dir, defaultConfigFile)
-
-		if _, err := os.Stat(dir); err == nil {
-			return fmt.Errorf("%s already exists", dir)
-		}
-
-		if err := os.MkdirAll(dir, 0o700); err != nil {
-			return fmt.Errorf("creating %s: %w", dir, err)
-		}
-
-		if err := os.WriteFile(configPath, []byte(defaultConfig), 0o600); err != nil {
-			return fmt.Errorf("writing %s: %w", configPath, err)
-		}
-
-		fmt.Printf("created %s\n", configPath)
-		return nil
+		return runInit(squawkDir)
 	},
 }
 

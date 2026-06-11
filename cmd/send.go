@@ -12,6 +12,7 @@ import (
 
 var sendTemplate string
 var sendVars []string
+var sendDryRun bool
 
 var sendCmd = &cobra.Command{
 	Use:   "send",
@@ -47,6 +48,12 @@ var sendCmd = &cobra.Command{
 			return err
 		}
 
+		if sendDryRun {
+			fmt.Println("--- channel:", tmpl.Channel, "---")
+			fmt.Println(text)
+			return nil
+		}
+
 		token, err := slack.Token()
 		if err != nil {
 			return err
@@ -59,6 +66,7 @@ var sendCmd = &cobra.Command{
 func init() {
 	sendCmd.Flags().StringVarP(&sendTemplate, "template", "t", "", "template name from squawk.yaml")
 	sendCmd.Flags().StringSliceVar(&sendVars, "var", nil, "additional template variables (key=value)")
+	sendCmd.Flags().BoolVar(&sendDryRun, "dry-run", false, "render the message without sending")
 	sendCmd.MarkFlagRequired("template")
 	rootCmd.AddCommand(sendCmd)
 }
