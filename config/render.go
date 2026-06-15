@@ -16,7 +16,11 @@ func (t *Template) Render(vars map[string]string) (string, error) {
 			if i > 0 {
 				b.WriteString(" ")
 			}
-			b.WriteString(fmt.Sprintf("<@%s>", m))
+			if strings.HasPrefix(m, "S") {
+				b.WriteString(fmt.Sprintf("<!subteam^%s>", m))
+			} else {
+				b.WriteString(fmt.Sprintf("<@%s>", m))
+			}
 		}
 		vars["mentions"] = b.String()
 	}

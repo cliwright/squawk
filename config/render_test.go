@@ -26,6 +26,26 @@ func TestRenderWithMentions(t *testing.T) {
 	}
 }
 
+func TestRenderWithGroupMentions(t *testing.T) {
+	tmpl := Template{
+		Channel:  "#alerts",
+		Mentions: []string{"U111", "S222"},
+		Text:     "deploy failed\n{{ .mentions }}",
+	}
+
+	result, err := tmpl.Render(map[string]string{})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if !strings.Contains(result, "<@U111>") {
+		t.Errorf("expected user mention, got: %s", result)
+	}
+	if !strings.Contains(result, "<!subteam^S222>") {
+		t.Errorf("expected subteam mention, got: %s", result)
+	}
+}
+
 func TestRenderNoMentions(t *testing.T) {
 	tmpl := Template{
 		Channel: "#alerts",
